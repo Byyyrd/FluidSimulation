@@ -17,7 +17,10 @@ public class render : MonoBehaviour
         material = new(shader);
         allCircles = new()
         {
-            new Circle(0, 0, radius)
+            new Circle(0, 0, radius),
+            new Circle(1, 1, radius),
+            new Circle(2, 2, radius)
+
         };
 
     }
@@ -43,10 +46,10 @@ public class render : MonoBehaviour
         {
             material.SetFloat("radius", radius);
             material.SetVector("center", new Vector4(circle.x, circle.y));
-            GL.Vertex3(circle.x - radius, circle.y - radius, 0);
-            GL.Vertex3(circle.x - radius, circle.y + radius, 0);
-            GL.Vertex3(circle.x + radius, circle.y + radius, 0);
-            GL.Vertex3(circle.x + radius, circle.y - radius, 0);
+            GL.Vertex3(circle.x - circle.radius, circle.y - circle.radius, 0);
+            GL.Vertex3(circle.x - circle.radius, circle.y + circle.radius, 0);
+            GL.Vertex3(circle.x + circle.radius, circle.y + circle.radius, 0);
+            GL.Vertex3(circle.x + circle.radius, circle.y - circle.radius, 0);
         }
         GL.End();
     }
