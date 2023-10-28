@@ -49,7 +49,7 @@ public class CalculateParticals : MonoBehaviour
                     //CalculateCollision(particle, particles[j]);
                 }
             }
-            //particle.velocity += new Vector3(0,gravity);
+            particle.velocity += new Vector3(0,gravity);
             particle.position += particle.velocity * Time.deltaTime;
             HandleCollisions(i);
             graphics.DrawCircle(particle.position.x, particle.position.y, radius, Color.blue);

@@ -167,11 +167,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcdf7a23d4b56648a6146ab8d67d227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  population: 100
+  population: 124
   radius: 0.2
+<<<<<<< Updated upstream
   boundsSize: {x: 10, y: 10}
   collisionDamping: 0.5
   gravity: -0.05
+=======
+  boundsSize: {x: 7, y: 7}
+  collisionDamping: 0.5
+  gravity: -0.1
+>>>>>>> Stashed changes
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
