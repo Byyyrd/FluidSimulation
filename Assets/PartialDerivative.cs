@@ -10,6 +10,7 @@ public class PartialDerivative : MonoBehaviour
     [SerializeField] private float radius;
     [Range(0,5)]
     [SerializeField] private float speed;
+    [SerializeField] private Gradient gradient;
     private Texture2D text;
 
     private Drawing graphics;
@@ -43,9 +44,13 @@ public class PartialDerivative : MonoBehaviour
     {
         foreach (Particle particle in particles)
         {
-            particle.position.x += AbleitungX(particle.position.x, particle.position.y) * (speed/100);
-            particle.position.y += AbleitungY(particle.position.x, particle.position.y) * (speed/100);
-            graphics.DrawCircle(particle.position.x - Camera.main.orthographicSize, particle.position.y - Camera.main.orthographicSize, radius, Color.green);
+            float dx = AbleitungX(particle.position.x, particle.position.y) ;
+            float dy = AbleitungY(particle.position.x, particle.position.y) ;
+            particle.position.x += dx * (speed / 100);
+            particle.position.y += dy * (speed / 100);
+            float avarageDelta = (Mathf.Abs(dx) + Mathf.Abs(dy)) / 2;
+            Color color = gradient.Evaluate(avarageDelta);
+            graphics.DrawCircle(particle.position.x - Camera.main.orthographicSize, particle.position.y - Camera.main.orthographicSize, radius, color);
         }   
     }
 

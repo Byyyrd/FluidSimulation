@@ -237,8 +237,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc25788442b0a741bae5ba8a1fa498c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  population: 500
+  population: 1023
   radius: 0.06
+  speed: 0.2
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 0, g: 0.97498703, b: 1, a: 1}
+    key2: {r: 1, g: 0.32082546, b: 0, a: 0}
+    key3: {r: 1, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 193
+    ctime1: 65535
+    ctime2: 41896
+    ctime3: 64382
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!4 &1855624088
 Transform:
   m_ObjectHideFlags: 0
