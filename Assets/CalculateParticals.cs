@@ -12,7 +12,7 @@ public class CalculateParticals : MonoBehaviour
 
     private Particle[] particles = new Particle[1023];
     private int particleIndex = 0;
-    private Graphics graphics;
+    private Drawing graphics;
     
     public class Particle
     {
@@ -27,7 +27,7 @@ public class CalculateParticals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        graphics = Graphics.Instance;
+        graphics = Drawing.Instance;
         CreateParticles();
     }
 

@@ -2,16 +2,16 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-public class Graphics : MonoBehaviour
+public class Drawing : MonoBehaviour
 {
-    private static Graphics _Instance;
-    public static Graphics Instance
+    private static Drawing _Instance;
+    public static Drawing Instance
     {
         get
         {
             if (!_Instance)
             {
-                _Instance = new GameObject().AddComponent<Graphics>();
+                _Instance = new GameObject().AddComponent<Drawing>();
                 _Instance.name = _Instance.GetType().ToString();
                 DontDestroyOnLoad(_Instance.gameObject);
             }
@@ -107,7 +107,7 @@ public class Graphics : MonoBehaviour
     private void Update()
     {
         // Draw a bunch of meshes each frame.
-        UnityEngine.Graphics.DrawMeshInstanced(mesh, 0, material, matrices, matrixIndex, block);
+        Graphics.DrawMeshInstanced(mesh, 0, material, matrices, matrixIndex, block);
 
         //Cleanup
         Array.Clear(matrices, 0,matrixIndex);
