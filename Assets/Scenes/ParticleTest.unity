@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
+  m_BackGroundColor: {r: 0.09501466, g: 0.08610714, b: 0.14150941, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -239,7 +239,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   population: 1023
   radius: 0.06
-  speed: 0.2
+  speed: 0
+  streghOfRandomness: 0
   gradient:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}

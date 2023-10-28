@@ -1,15 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PartialDerivative : MonoBehaviour
 {
+    [Header("Starting Variables")]
+    [Range(0, 1023)]
     [SerializeField] private int population;
+    [Header("Runtime Variables")]
+    [Range(0, 0.2f)]
     [SerializeField] private float radius;
     [Range(0,5)]
     [SerializeField] private float speed;
+    [Range(0, 10)]
+    [SerializeField] private float streghOfRandomness;
     [SerializeField] private Gradient gradient;
     private Texture2D text;
 
@@ -44,10 +47,12 @@ public class PartialDerivative : MonoBehaviour
     {
         foreach (Particle particle in particles)
         {
-            float dx = AbleitungX(particle.position.x, particle.position.y) ;
-            float dy = AbleitungY(particle.position.x, particle.position.y) ;
+            Vector3 offset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f),0) * streghOfRandomness;
+            float dx = AbleitungX(particle.position.x, particle.position.y);
+            float dy = AbleitungY(particle.position.x, particle.position.y);
             particle.position.x += dx * (speed / 100);
             particle.position.y += dy * (speed / 100);
+            particle.position += offset * (speed / 100);
             float avarageDelta = (Mathf.Abs(dx) + Mathf.Abs(dy)) / 2;
             Color color = gradient.Evaluate(avarageDelta);
             graphics.DrawCircle(particle.position.x - Camera.main.orthographicSize, particle.position.y - Camera.main.orthographicSize, radius, color);

@@ -169,6 +169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   population: 100
   radius: 0.2
+  boundsSize: {x: 10, y: 10}
+  collisionDamping: 0.5
+  gravity: -0.05
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
