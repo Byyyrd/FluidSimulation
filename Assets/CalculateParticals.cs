@@ -14,20 +14,10 @@ public class CalculateParticals : MonoBehaviour
     [SerializeField] private float collisionDamping;
     [SerializeField] private float gravity;
 
-    private Particle[] particles = new Particle[1023];
+    public Particle[] particles = new Particle[1023];
     private int particleIndex = 0;
     private Drawing graphics;
     
-    public class Particle
-    {
-        public Vector3 position;
-        public Vector3 velocity;
-        public Particle(Vector3 position, Vector3 velocity)
-        {
-            this.position = position;
-            this.velocity = velocity;
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +39,7 @@ public class CalculateParticals : MonoBehaviour
                     //CalculateCollision(particle, particles[j]);
                 }
             }
-            particle.velocity += new Vector3(0,gravity);
+            particle.velocity += new Vector2(0,gravity);
             particle.position += particle.velocity * Time.deltaTime;
             HandleCollisions(i);
             graphics.DrawCircle(particle.position.x, particle.position.y, radius, Color.blue);
