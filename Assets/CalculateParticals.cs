@@ -13,6 +13,12 @@ public class CalculateParticals : MonoBehaviour
     [SerializeField] private Vector2 boundsSize;
     [SerializeField] private float collisionDamping;
     [SerializeField] private float gravity;
+    [Range(0.01f, 0.1f)]
+    [SerializeField] private float collisionStrengh;
+    [Range(1,10)]
+    [SerializeField] private float effectRadius;
+    [Range(1, 10)]
+    [SerializeField] private float dampingRate;
 
     private Particle[] particles = new Particle[1023];
     private int particleIndex = 0;
@@ -28,6 +34,7 @@ public class CalculateParticals : MonoBehaviour
             this.velocity = velocity;
         }
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,10 +53,12 @@ public class CalculateParticals : MonoBehaviour
             {
                 if(i != j)
                 {
-                    //CalculateCollision(particle, particles[j]);
+                    CalculateCollision(particle, particles[j]);
                 }
             }
             particle.velocity += new Vector3(0,gravity);
+            particle.velocity.x = Mathf.Lerp(particle.velocity.x, 0, Time.deltaTime * dampingRate);
+            particle.velocity.y = Mathf.Lerp(particle.velocity.y, 0, Time.deltaTime * dampingRate);
             particle.position += particle.velocity * Time.deltaTime;
             HandleCollisions(i);
             graphics.DrawCircle(particle.position.x, particle.position.y, radius, Color.blue);
@@ -76,20 +85,29 @@ public class CalculateParticals : MonoBehaviour
             particles[particleIndex++] = new(new(x - xOffset, y), Vector3.zero);
         }
     }
+
     private void CalculateCollision(Particle particle1,Particle particle2)
     {
         float distance = Vector3.Distance(particle1.position, particle2.position);
-        if (distance < radius)
+        if (distance < radius * effectRadius)
         {
+            Vector3 randomOffset = new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0);
+
             float angle1 = -Mathf.Atan2(particle1.position.y - particle2.position.y,particle1.position.x - particle2.position.x);
-            particle1.velocity.x += Mathf.Cos(angle1);
-            particle1.velocity.y += Mathf.Sin(angle1);
+            particle1.velocity.x -= Mathf.Cos(angle1) * collisionStrengh * CalculatePriority(distance);
+            particle1.velocity.y -= Mathf.Sin(angle1) * collisionStrengh * CalculatePriority(distance);
+            particle1.velocity += randomOffset;
 
-            float angle2 = -Mathf.Atan2( particle2.position.y - particle1.position.y , particle2.position.x - particle1.position.x ); ;
-            particle1.velocity.x += Mathf.Cos(angle2);
-            particle1.velocity.y += Mathf.Sin(angle2);
+            float angle2 = -Mathf.Atan2(particle2.position.y - particle1.position.y ,particle2.position.x - particle1.position.x );
+            particle2.velocity.x -= Mathf.Cos(angle2) * collisionStrengh * CalculatePriority(distance);
+            particle2.velocity.y -= Mathf.Sin(angle2) * collisionStrengh * CalculatePriority(distance);
+            particle2.velocity -= randomOffset;
         }
+    }
 
+    private float CalculatePriority(float distance)
+    {
+        return (float) Math.Pow(Math.PI,(double) Math.Abs(distance * 5)) - 0.5f;
     }
     
     public void OnDrawGizmos()
@@ -121,7 +139,7 @@ public class CalculateParticals : MonoBehaviour
 
         pos.y += radius / 2;
         // Update position and velocity
-        particle.position = pos ;
+        particle.position = pos;
         particle.velocity = vel;
     }
 
