@@ -269,11 +269,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcdf7a23d4b56648a6146ab8d67d227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  population: 603
+  population: 29
   radius: 0.1
   boundsSize: {x: 7, y: 7}
   collisionDamping: 0.5
   gravity: 0
+  dc: {fileID: 223128884}
 --- !u!114 &223128884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +289,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cp: {fileID: 223128883}
   smoothingRadius: 1
+  targetDensity: 1
+  pressureForce: 0.08
+  externalForce: {x: 0, y: 0}
+  viscosity: 1.6
+  speed: 1
   _textMeshPro: {fileID: 412443845}
 --- !u!1 &412443843
 GameObject:
@@ -324,8 +330,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -275.25, y: -237}
-  m_SizeDelta: {x: 550.5, y: 50}
+  m_AnchoredPosition: {x: 0, y: -237}
+  m_SizeDelta: {x: 1101, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &412443845
 MonoBehaviour:

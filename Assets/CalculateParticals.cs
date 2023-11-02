@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class CalculateParticals : MonoBehaviour
@@ -13,6 +10,7 @@ public class CalculateParticals : MonoBehaviour
     [SerializeField] private Vector2 boundsSize;
     [SerializeField] private float collisionDamping;
     [SerializeField] private float gravity;
+    [SerializeField] private DensityCalculator dc;
 
     public Particle[] particles = new Particle[1023];
     private int particleIndex = 0;
@@ -22,7 +20,7 @@ public class CalculateParticals : MonoBehaviour
     void Start()
     {
         graphics = Drawing.Instance;
-        CreateParticles();
+        CreateRandomParticles();
     }
 
     // Update is called once per frame
@@ -32,17 +30,23 @@ public class CalculateParticals : MonoBehaviour
         for (uint i = 0; i < particleIndex; i++)
         {
             Particle particle = particles[i];
-            for (int j = 0; j < particleIndex; j++)
-            {
-                if(i != j)
-                {
-                    //CalculateCollision(particle, particles[j]);
-                }
-            }
             particle.velocity += new Vector2(0,gravity);
             particle.position += particle.velocity * Time.deltaTime;
             HandleCollisions(i);
-            graphics.DrawCircle(particle.position.x, particle.position.y, radius, Color.blue);
+            Color color = Color.white;
+            if (particle.density > dc.targetDensity)
+                color = Color.red;
+            if (particle.density < dc.targetDensity)
+                color = Color.blue;
+            graphics.DrawCircle(particle.position.x, particle.position.y, radius,color);
+        }
+    }
+    private void CreateRandomParticles()
+    {
+        Array.Clear(particles, 0, particleIndex);
+        for (int i = 0; i < population; i++)
+        {
+            particles[particleIndex++] = new(new(UnityEngine.Random.Range(-boundsSize.x / 2, boundsSize.x/2), UnityEngine.Random.Range(-boundsSize.y / 2, boundsSize.y / 2)), Vector2.zero);
         }
     }
 
