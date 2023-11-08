@@ -11,6 +11,9 @@ public class CalculateParticals : MonoBehaviour
     [SerializeField] private float collisionDamping;
     [SerializeField] private float gravity;
     [SerializeField] private DensityCalculator dc;
+    [SerializeField] private float gravityConstant = (float)(6.67 * Mathf.Pow(10,-11));
+    [SerializeField] private float massOfEarth = (float)(5.972 * Mathf.Pow(10, 24));
+    [SerializeField] private float radiusToEarth = (float)(6.371 * Mathf.Pow(10, 6));
 
     public Particle[] particles = new Particle[1023];
     private int particleIndex = 0;
@@ -21,6 +24,7 @@ public class CalculateParticals : MonoBehaviour
     {
         graphics = Drawing.Instance;
         CreateRandomParticles();
+        gravity = (gravityConstant * massOfEarth) / Mathf.Pow(radiusToEarth,2);
     }
 
     // Update is called once per frame
@@ -31,6 +35,7 @@ public class CalculateParticals : MonoBehaviour
         {
             Particle particle = particles[i];
             particle.velocity += new Vector2(0,gravity);
+            particle.velocity += new Vector2(0,-gravity * Time.deltaTime);
             particle.position += particle.velocity * Time.deltaTime;
             HandleCollisions(i);
             Color color = Color.white;
