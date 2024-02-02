@@ -30,7 +30,11 @@ public class CalculateParticals : MonoBehaviour
         for (uint i = 0; i < particleIndex; i++)
         {
             Particle particle = particles[i];
+//<<<<<<< Updated upstream
             particle.velocity += new Vector2(0,gravity);
+//=======
+            particle.velocity += new Vector2(0,-gravity * Time.deltaTime);
+//>>>>>>> Stashed changes
             particle.position += particle.velocity * Time.deltaTime;
             HandleCollisions(i);
             Color color = Color.white;
