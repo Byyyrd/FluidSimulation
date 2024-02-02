@@ -13,6 +13,7 @@ public class DensityCalculator : MonoBehaviour
     [SerializeField] private Vector2 externalForce;
     [SerializeField] private float viscosity;
     [SerializeField] private float speed;
+    [SerializeField] private float u = (float)(1.66 * Mathf.Pow(10,-27));
     private Particle[] particles;
     private Vector2 position = Vector2.zero;
     private Drawing graphics;
@@ -23,7 +24,6 @@ public class DensityCalculator : MonoBehaviour
     {
         graphics = Drawing.Instance;
         particles = new Particle[0];
-        
     }
 
     // Update is called once per frame
@@ -122,7 +122,6 @@ public class DensityCalculator : MonoBehaviour
                 float influence = Poly6(dist, smoothingRadius);
                 density += influence * mass / volume;
             }
-            
         }
         return density;
     }

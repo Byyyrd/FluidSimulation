@@ -269,12 +269,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcdf7a23d4b56648a6146ab8d67d227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  population: 29
+  population: 301
   radius: 0.1
   boundsSize: {x: 7, y: 7}
   collisionDamping: 0.5
   gravity: 0
   dc: {fileID: 223128884}
+  massEarth: 5.972e+24
+  earthRadius: 6371000
+  gravitationalConstant: 6.6743e-11
 --- !u!114 &223128884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +297,7 @@ MonoBehaviour:
   externalForce: {x: 0, y: 0}
   viscosity: 1.6
   speed: 1
+  u: 1.66e-27
   _textMeshPro: {fileID: 412443845}
 --- !u!1 &412443843
 GameObject:
