@@ -50,7 +50,16 @@ public class DensityCalculator : MonoBehaviour
                 particle.velocity += speed * Time.deltaTime * CalculateAcceleration(particle);
             }
         }
-
+        foreach (Particle particle1 in particles)
+        {
+            foreach(Particle particle2 in particles)
+            {
+                if (particle1 != particle2)
+                {
+                    ColliderOfMolecules(0.1f,particle1,particle2);
+                }
+            }
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -183,14 +192,17 @@ public class DensityCalculator : MonoBehaviour
         //}
 
     }
-    public void ColliderOfMolecules(float radius)
+    public void ColliderOfMolecules(float radius, Particle p1, Particle p2)
     {
-        
+        if (p1 != p2)
+        {
+            if ((Mathf.Pow(p2.position.x - p1.position.x, 2)+Mathf.Pow(p2.position.y - p1.position.y, 2)) <= Mathf.Pow(radius,2))
+            {
+                 print("treffen");
+            }
+        }
     }
-    public float CircleFunction(float x, float radius)
-    {
-        return Mathf.Sqrt(Mathf.Pow(2*radius,2) - Mathf.Pow(x,2));
-    }
+   
     public float SmoothingFunction(float distance, float radius)
     {
         if (distance < radius)
