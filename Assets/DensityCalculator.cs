@@ -183,7 +183,14 @@ public class DensityCalculator : MonoBehaviour
         //}
 
     }
-
+    public void ColliderOfMolecules(float radius)
+    {
+        
+    }
+    public float CircleFunction(float x, float radius)
+    {
+        return Mathf.Sqrt(Mathf.Pow(2*radius,2) - Mathf.Pow(x,2));
+    }
     public float SmoothingFunction(float distance, float radius)
     {
         if (distance < radius)
