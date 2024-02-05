@@ -52,13 +52,7 @@ public class DensityCalculator : MonoBehaviour
         }
         foreach (Particle particle1 in particles)
         {
-            foreach(Particle particle2 in particles)
-            {
-                if (particle1 != particle2)
-                {
-                    ColliderOfMolecules(0.1f,particle1,particle2);
-                }
-            }
+            ColliderOfMolecules(0.1f,particle1);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -192,13 +186,18 @@ public class DensityCalculator : MonoBehaviour
         //}
 
     }
-    public void ColliderOfMolecules(float radius, Particle p1, Particle p2)
+    public void ColliderOfMolecules(float radius, Particle particle)
     {
-        if (p1 != p2)
+        foreach (Particle otherParticle in particles)
         {
-            if ((Mathf.Pow(p2.position.x - p1.position.x, 2)+Mathf.Pow(p2.position.y - p1.position.y, 2)) <= Mathf.Pow(radius,2))
+            if (particle != otherParticle && particle != null && otherParticle != null)
             {
-                 print("treffen");
+                float dx = otherParticle.position.x - particle.position.x;
+                float dy = otherParticle.position.y - particle.position.y;
+                if ((Mathf.Pow(dx, 2) + Mathf.Pow(dy, 2)) <= Mathf.Pow(radius, 2))
+                {
+                    print("treffen");
+                }
             }
         }
     }
