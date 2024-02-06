@@ -24,7 +24,7 @@ public class CalculateParticals : MonoBehaviour
     {
         graphics = Drawing.Instance;
         CreateRandomParticles();
-        gravity = (gravityConstant * massOfEarth) / Mathf.Pow(radiusToEarth,2);
+        //gravity = (gravityConstant * massOfEarth) / Mathf.Pow(radiusToEarth,2);
     }
 
     // Update is called once per frame

@@ -13,6 +13,7 @@ public class DensityCalculator : MonoBehaviour
     [SerializeField] private Vector2 externalForce;
     [SerializeField] private float viscosity;
     [SerializeField] private float speed;
+    [SerializeField] private float nearDensityThreashhold = .2f;
     private Particle[] particles;
     private Vector2 position = Vector2.zero;
     private Drawing graphics;
@@ -100,8 +101,16 @@ public class DensityCalculator : MonoBehaviour
 
             float dist = (otherParticle.position - particle.position).magnitude;
             Vector2 dir = (otherParticle.position - particle.position) / (dist + 0.0001f);
-            float gradient = Poly6Derivative(dist, smoothingRadius);
-            float otherPressure = CalculatePressure(otherParticle);
+            float gradient;
+			if (dist > nearDensityThreashhold)
+            {
+				gradient = Poly6Derivative(dist, smoothingRadius);
+            }
+            else
+            {
+                gradient = SpikeyDerivative(dist, smoothingRadius);
+            }
+			float otherPressure = CalculatePressure(otherParticle);
             float pressure = CalculatePressure(particle);
             pressureGradient += ((otherPressure + pressure) / 2 * particle.density) * gradient * mass * dir;
         }
@@ -119,7 +128,15 @@ public class DensityCalculator : MonoBehaviour
             if(particle != null)
             {
                 float dist = (position - particle.position).magnitude;
-                float influence = Poly6(dist, smoothingRadius);
+                float influence = 0;
+                if(dist > nearDensityThreashhold)
+                {
+					influence = Poly6(dist, smoothingRadius);
+                }
+                else
+                {
+                    influence = Spikey(dist, smoothingRadius);
+                }
                 density += influence * mass / volume;
             }
             
@@ -135,8 +152,16 @@ public class DensityCalculator : MonoBehaviour
             if (particle != null)
             {
                 float dist = (position - particle.position).magnitude;
-                float influence = Poly6(dist, smoothingRadius);
-                fieldQuantity += influence * mass;
+                float influence = 0;
+                if (dist > .2)
+				{
+					influence = Poly6(dist, smoothingRadius);
+				}
+				else
+				{
+					influence = Spikey(dist, smoothingRadius);
+				}
+				fieldQuantity += influence * mass;
             }
         }
         return fieldQuantity;
@@ -151,7 +176,15 @@ public class DensityCalculator : MonoBehaviour
             {
                 float dist = (position - particle.position).magnitude;
                 Vector2 dir = (position - particle.position) / (dist + 0.0001f);
-                float gradient = Poly6Derivative(dist, smoothingRadius);
+                float gradient;
+			if (dist > nearDensityThreashhold)
+            {
+				gradient = Poly6Derivative(dist, smoothingRadius);
+            }
+            else
+            {
+                gradient = SpikeyDerivative(dist, smoothingRadius);
+            }
                 float particleDensity = particle.density;
                 resultGradient += CalculateFieldQuantity(particle.position) * dir * gradient * mass / (particleDensity+0.0001f);
             }
@@ -236,4 +269,14 @@ public class DensityCalculator : MonoBehaviour
         }
         return 0;
     }
+
+    public float Spikey(float distance,float radius)
+    {
+		return (15/(Mathf.PI * radius * 6)) * Mathf.Pow((radius - distance), 3);
+	}
+
+	public float SpikeyDerivative(float distance, float radius)
+	{
+		return -45 * Mathf.Pow((radius - distance), 2)/(Mathf.Pow(radius,6)*Mathf.PI);
+	}
 }
